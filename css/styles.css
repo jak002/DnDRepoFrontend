@@ -11,14 +11,63 @@ h1{
 h3{
     font-weight: 100;
 }
+@property --angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
 .maincard {
+    display: flex;
+    flex-direction: column;
     align-content: center;
     text-align: center;
     width: fit-content;
     height: auto;
-    padding: 70px;
+    padding-bottom: 50px;
     margin:auto;
-    margin-top: 10%;
     border-radius: 40px;
-    box-shadow: 0px 0px 50px 20px darkslateblue;
+    position:relative;
+    background-color: black;
+}
+.maincard::after, .maincard::before{
+    content:'';
+    position:absolute;
+    height:100%;
+    width:100%;
+    background-image: conic-gradient(from var(--angle),black 50%, darkslateblue, rgb(177, 72, 177),black);
+    top:50%;
+    left:50%;
+    translate:-50% -50%;
+    z-index: -1;
+    border-radius: 40px;
+    padding: 5px;
+    animation: 15s spin linear infinite;
+}
+.maincard::after{
+    filter:blur(0.5rem);
+}
+.maincard::before{
+    filter: blur(1.5rem);
+    opacity:0.5;
+}
+@keyframes spin{
+    from{
+        --angle: 0deg;
+    }
+    to{
+        --angle:360deg;
+    }
+}
+.grid{
+    display:flex;
+    justify-content: center;
+
+}
+.card{
+    width: 20%;
+    margin: 10px;
+    padding: 10px;
+    background-color: black;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px 5px darkslateblue;
 }
