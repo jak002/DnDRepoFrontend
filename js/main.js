@@ -1,6 +1,10 @@
 const app = Vue.createApp({
     data() {
         return {
+            name: null,
+            level: null,
+            characterclass: null,
+            subclass: null,
             intro: 'Empty vue.js template',
             undertitle: 'Ripe for customization',
             characters: [
@@ -42,6 +46,9 @@ const app = Vue.createApp({
     methods: {
         defaultMethod(){
 
+        },
+        addToList(){
+            this.characters.push({name:this.name,level:this.level,class:this.characterclass,subclass:this.subclass})
         }
     },
     computed: {

@@ -16,15 +16,28 @@
         <div id="app">
             <div class="nav-bar"></div>
             <div class="maincard">
-            <h1>My D&D characters (holy shit)</h1>
-            <div class="grid">
-            <div v-for="(char, index) in characters" :key="index" class="card">
-                <h1>{{char.name}}</h1>
-                <p><i><b>Class:</b> lvl {{char.level}} {{char.subclass}} {{char.class}}</i></p>
-                <p><b>Description: </b>{{char.description}}</p>
+                <h1>My D&D characters (holy shit)</h1>
+                <div class="grid">
+                    <div v-for="(char, index) in characters" :key="index" class="card">
+                        <h1>{{char.name}}</h1>
+                        <p><i><b>Class:</b> lvl {{char.level}} {{char.subclass}} {{char.class}}</i></p>
+                        <p><b>Description: </b>{{char.description}}</p>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                <p>Character name: <input type="text" v-model="name"></input></p>
+                <p>Character level: <input type="text" v-model="level"></input></p>
+                <p>Character class: <input type="text" v-model="characterclass"></input></p>
+                <p>Character subclass: <input type="text" v-model="subclass"></input></p>
+                <input type="button" value="add new character" v-on:click="addToList" style="max-width: fit-content; margin:auto;">
             </div>
-        </div>
-    </div>
+                <div class="card">
+                    <h1>{{name}}</h1>
+                    <p><i><b>Class:</b> lvl {{level}} {{subclass}} {{characterclass}}</i></p>
+                </div>
+            </div>
+            </div>
         </div>
         <!-- Import App -->
         <script src="./js/main.js"></script>
