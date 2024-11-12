@@ -7,8 +7,11 @@ const app = Vue.createApp({
             level: null,
             characterclass: null,
             subclass: null,
+            tokenlink: null,
+            searchid: "",
             intro: 'Empty vue.js template',
             undertitle: 'Ripe for customization',
+            selectedchar: [],
             characters: [
                 /* {
                     name: 'Grape',
@@ -63,8 +66,21 @@ const app = Vue.createApp({
                 console.log("Error: " + ex.message);
             })
         },
+        getById(id){
+            specurl = baseurl + "/" + id
+            axios.get(specurl)
+            .then(response => {
+                console.log("fetched character successfully");
+                console.log("status code: " + response.status);
+                this.selectedchar = [];
+                this.selectedchar.push(response.data);
+            })
+            .catch(error = (ex) => {
+                console.log("Error: " + ex.message);
+            })
+        },
         addToRest(){
-            axios.post(baseurl,{"id":0,name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass,campaign:"TBA",description:"this has been added in post :D"})
+            axios.post(baseurl,{"id":0,name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass,campaign:"TBA",description:"this has been added in post :D",token:this.tokenlink})
             .then(response => {
                 console.log("it worked! so far");
                 console.log("status code: " + response.status);
@@ -73,7 +89,6 @@ const app = Vue.createApp({
             .catch(error = (ex) => {
                 console.log("Error: " + ex.message);
             })
-            this.getList();
         }
     },
     computed: {

@@ -18,29 +18,44 @@
             <div class="nav-bar"></div>
             <div class="maincard">
                 <h1>My D&D characters (holy shit)</h1>
-                <div class="grid">
-                    <div v-for="(char, index) in characters" :key="index" class="card">
-                        <h1>{{char.name}}</h1>
-                        <p><i><b>Class:</b> lvl {{char.level}} {{char.subclass}} {{char.characterClass}}</i></p>
-                        <p><b>Description: </b>{{char.description}}</p>
-                    </div>
+                <input type="button" class="button" value="Get list of all characters" v-on:click="getList" style="max-width: fit-content; margin:auto;">
+                <ul>
+                    <li v-for="(char, index) in characters" :key="index">
+                        {{char.id}}: {{char.name}}, level {{char.level}} {{char.subclass}} {{char.characterClass}}
+                    </li>
 
-                </div>
-                <input type="button" value="refresh" v-on:click="getList" style="max-width: fit-content; margin:auto;">
+                </ul>
+
                 <div class="grid">
                     <div class="card">
-                <p>Character name: <input type="text" v-model="name"></input></p>
-                <p>Character level: <input type="text" v-model="level"></input></p>
-                <p>Character class: <input type="text" v-model="characterclass"></input></p>
-                <p>Character subclass: <input type="text" v-model="subclass"></input></p>
-                <input type="button" value="add new character" v-on:click="addToRest" style="max-width: fit-content; margin:auto;">
+                        <h1 style="margin-top: 0%;">Add new character:</h1>
+                <p>Name: <input type="text" class="input" v-model="name"></input></p>
+                <p>Level: <input type="text" class="input" v-model="level"></input></p>
+                <p>Class: <input type="text" class="input" v-model="characterclass"></input></p>
+                <p>Subclass: <input type="text" class="input" v-model="subclass"></input></p>
+                <p>Token link: <input type="text" class="input" v-model="tokenlink"></input></p>
+                <input type="button" class="button" value="add new character" v-on:click="addToRest" style="max-width: fit-content; margin:auto;">
             </div>
                 <div class="card">
                     <h1>{{name}}</h1>
+                    <img v-bind:src="tokenlink" style="width:100px;">
                     <p><i><b>Class:</b> lvl {{level}} {{subclass}} {{characterclass}}</i></p>
                 </div>
             </div>
+            <p>Search by ID:</p>
+            <input type="text" class="input" v-model="searchid" style="width:100px; align-self: center;"></input>
+            <input type="button" class="button" value="search" v-on:click="getById(searchid)" style="max-width: fit-content; margin:auto;">
+            <div class="gridrow">
+                <div v-for="(char, index) in selectedchar" :key="index" class="card">
+                <h1>{{char.name}}</h1>
+                <img v-bind:src="char.token" style="width:100px;">
+                <p><i><b>Class:</b> lvl {{char.level}} {{char.subclass}} {{char.characterClass}}</i></p>
+                <p><i><b>Campaign:</b> {{char.campaign}}</i></p>
+                <p><b>Description: </b>{{char.description}}</p>
             </div>
+
+        </div>
+        </div>
         </div>
         <!-- Import App -->
         <script src="./js/main.js"></script>
