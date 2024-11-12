@@ -1,3 +1,5 @@
+const baseurl = "http://localhost:5235/api/Character"
+
 const app = Vue.createApp({
     data() {
         return {
@@ -8,10 +10,10 @@ const app = Vue.createApp({
             intro: 'Empty vue.js template',
             undertitle: 'Ripe for customization',
             characters: [
-                {
+                /* {
                     name: 'Grape',
                     level: 7,
-                    class: 'Grape',
+                    characterClass: 'Grape',
                     subclass:'Grape',
                     campaign: "Azulee's campaign",
                     description: "Grape is Grape. The coolest Grape that ever Grape'd. Can and will sass you. Grape started off as a secondary character, cloned out from an NPC found along the campaign. Quickly, he became a beloved part of the party, and is now a kind of secondary mascot to one of our campaigns."
@@ -19,7 +21,7 @@ const app = Vue.createApp({
                 {
                     name: 'Moon',
                     level: 15,
-                    class: 'Rogue',
+                    characterClass: 'Rogue',
                     subclass: 'Swashbuckler',
                     campaign: "Zetius",
                     description: "First character, very fun, much stabby"
@@ -27,7 +29,7 @@ const app = Vue.createApp({
                 {
                     name: "Sun's chosen",
                     level: 16,
-                    class: 'Sorcerer/Warlock',
+                    characterClass: 'Sorcerer/Warlock',
                     subclass: 'Divine Soul/Fiend',
                     campaign: "Azulee's campaign",
                     description: "First attempt at multiclassing, was broken as fuck"
@@ -35,11 +37,11 @@ const app = Vue.createApp({
                 {
                     name: "Syrena",
                     level: 2,
-                    class: 'Wild Blade',
+                    characterClass: 'Wild Blade',
                     subclass: 'Circle of the Moon',
                     campaign: "Civ's campaign",
                     description: "very druid"
-                }
+                } */
             ]
         }
     },
@@ -48,7 +50,30 @@ const app = Vue.createApp({
 
         },
         addToList(){
-            this.characters.push({name:this.name,level:this.level,class:this.characterclass,subclass:this.subclass})
+            this.characters.push({name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass})
+        },
+        getList(){
+            axios.get(baseurl)
+            .then(response => {
+                console.log("fetched characters successfully");
+                console.log("status code: " + response.status);
+                this.characters = response.data;
+            })
+            .catch(error = (ex) => {
+                console.log("Error: " + ex.message);
+            })
+        },
+        addToRest(){
+            axios.post(baseurl,{"id":0,name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass,campaign:"TBA",description:"this has been added in post :D"})
+            .then(response => {
+                console.log("it worked! so far");
+                console.log("status code: " + response.status);
+
+            })
+            .catch(error = (ex) => {
+                console.log("Error: " + ex.message);
+            })
+            this.getList();
         }
     },
     computed: {
