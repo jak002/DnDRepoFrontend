@@ -1,4 +1,5 @@
-const baseurl = "http://localhost:5235/api/Character"
+/* const baseurl = "http://localhost:5235/api/Character" */
+const baseurl = "http://dndrest.mewnlightro.se/api/Character"
 
 const app = Vue.createApp({
     data() {
@@ -73,9 +74,12 @@ const app = Vue.createApp({
             })
         },
         getById(id){
-            this.statussuccess = " "
-            this.statuserror = " "
-            specurl = baseurl + "/" + id
+            if(id == "") {
+                this.selectedchar = [];
+            } else {
+            this.statussuccess = " ";
+            this.statuserror = " ";
+            specurl = baseurl + "/" + id;
             axios.get(specurl)
             .then(response => {
                 console.log("fetched character successfully");
@@ -88,11 +92,13 @@ const app = Vue.createApp({
                 console.log("Error: " + ex.message);
                 this.statuserror = "couldn't find character. " + ex.message
 
-            })
+            }
+            )
+            }
         },
         addToRest(){
             this.statussuccess = " "
-            this.statuserror
+            this.statuserror = " "
             axios.post(baseurl,{"id":0,name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass,campaign:"TBA",description:"TBA",token:this.tokenlink})
             .then(response => {
                 console.log("it worked! so far");
