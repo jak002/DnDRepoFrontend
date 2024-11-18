@@ -6,9 +6,12 @@ const app = Vue.createApp({
             name: null,
             level: null,
             characterclass: null,
-            subclass: null,
-            tokenlink: null,
+            subclass: "",
+            tokenlink: "",
             searchid: "",
+            statussuccess: " ",
+            statuserror: " ",
+            update: false,
             intro: 'Empty vue.js template',
             undertitle: 'Ripe for customization',
             selectedchar: [],
@@ -56,6 +59,8 @@ const app = Vue.createApp({
             this.characters.push({name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass})
         },
         getList(){
+            this.statussuccess = " "
+            this.statuserror = " "
             axios.get(baseurl)
             .then(response => {
                 console.log("fetched characters successfully");
@@ -64,9 +69,12 @@ const app = Vue.createApp({
             })
             .catch(error = (ex) => {
                 console.log("Error: " + ex.message);
+                this.statuserror = "couldn't get characters. " + ex.message
             })
         },
         getById(id){
+            this.statussuccess = " "
+            this.statuserror = " "
             specurl = baseurl + "/" + id
             axios.get(specurl)
             .then(response => {
@@ -74,20 +82,61 @@ const app = Vue.createApp({
                 console.log("status code: " + response.status);
                 this.selectedchar = [];
                 this.selectedchar.push(response.data);
-            })
-            .catch(error = (ex) => {
-                console.log("Error: " + ex.message);
-            })
-        },
-        addToRest(){
-            axios.post(baseurl,{"id":0,name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass,campaign:"TBA",description:"this has been added in post :D",token:this.tokenlink})
-            .then(response => {
-                console.log("it worked! so far");
-                console.log("status code: " + response.status);
 
             })
             .catch(error = (ex) => {
                 console.log("Error: " + ex.message);
+                this.statuserror = "couldn't find character. " + ex.message
+
+            })
+        },
+        addToRest(){
+            this.statussuccess = " "
+            this.statuserror
+            axios.post(baseurl,{"id":0,name:this.name,level:this.level,characterClass:this.characterclass,subclass:this.subclass,campaign:"TBA",description:"TBA",token:this.tokenlink})
+            .then(response => {
+                console.log("it worked! so far");
+                console.log("status code: " + response.status);
+                this.statussuccess = 'character added!'
+                this.characters = response.data;
+
+            })
+            .catch(error = (ex) => {
+                console.log("Error: " + ex.message);
+                this.statuserror = "character couldn't be added. " + ex.message
+            })
+        },
+        deleteFromRest(){
+            this.statussuccess = " "
+            this.statuserror = " "
+            specurl = baseurl + "/" + this.selectedchar[0].id
+            axios.delete(specurl)
+            .then(response => {
+                console.log("character successfully murderized")
+                this.selectedchar = []
+                this.statussuccess = 'character successfully murdered. goodbye :c'
+                this.characters = response.data;
+            }
+            )
+            .catch(error => {
+                console.log("Error: " + error.message);
+                this.statuserror = "couldn't delete. " + error.message
+            })
+        },
+        updateRest(){
+            this.update = false
+            this.statussuccess = " "
+            this.statuserror = " "
+            specurl = baseurl + "/" + this.selectedchar[0].id
+            axios.put(specurl,{"id":this.selectedchar[0].id,name:this.selectedchar[0].name,level:this.selectedchar[0].level,characterClass:this.selectedchar[0].characterClass,subclass:this.selectedchar[0].subclass,campaign:this.selectedchar[0].campaign,description:this.selectedchar[0].description,token:this.selectedchar[0].token})
+            .then(response => {
+                console.log("hoo boy this werks")
+                this.statussuccess = 'character successfully updated!'
+                this.characters = response.data;
+            })
+            .catch(error => {
+                console.log("Error: " + error.message)
+                this.statuserror = "couldn't update. " + error.message
             })
         }
     },

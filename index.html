@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Vue Template</title>
+        <title>A repository of my DnD characters</title>
         <!-- Import Styles -->
         <link rel="stylesheet" href="./css/styles.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,7 @@
                     </li>
 
                 </ul>
-
+                <p>status: <span class="success">{{statussuccess}}</span><span class="error">{{statuserror}}</span></p>
                 <div class="grid">
                     <div class="card">
                         <h1 style="margin-top: 0%;">Add new character:</h1>
@@ -47,11 +47,19 @@
             <input type="button" class="button" value="search" v-on:click="getById(searchid)" style="max-width: fit-content; margin:auto;">
             <div class="gridrow">
                 <div v-for="(char, index) in selectedchar" :key="index" class="card">
+
                 <h1>{{char.name}}</h1>
+                <div>
                 <img v-bind:src="char.token" style="width:100px;">
-                <p><i><b>Class:</b> lvl {{char.level}} {{char.subclass}} {{char.characterClass}}</i></p>
-                <p><i><b>Campaign:</b> {{char.campaign}}</i></p>
-                <p><b>Description: </b>{{char.description}}</p>
+                <input v-if="update" type="text" class="input" v-model="char.token"></input>
+            </div>
+                <p><i><b>Class:</b> lvl <input v-if="update" type="text" class="updateinput" v-model="char.level"></input><span v-else>{{char.level}}</span> <input v-if="update" type="text" class="updateinput" v-model="char.subclass"><span v-else>{{char.subclass}}</span> <input v-if="update" type="text" class="updateinput" v-model="char.characterClass"><span v-else>{{char.characterClass}}</span></i></p>
+                <p><i><b>Campaign:</b> <input v-if="update" type="text" class="updateinput" v-model="char.campaign"><span v-else>{{char.campaign}}</span></i></p>
+                <p><b>Description:</b> <textarea v-if="update" class="updateinput" v-model="char.description" style="white-space: pre-wrap;"></textarea><span v-else style="white-space: pre-wrap;">{{char.description}}</span></p>
+
+                <input type="button" class="button" value="delete" v-on:click="deleteFromRest()" style="max-width: fit-content; margin:auto;">
+                <input type="button" v-if="!update" class="button" value="update" v-on:click="update = !update" style="max-width: fit-content; margin:auto;">
+                <input type="button" v-else class="button" value="update" v-on:click="updateRest()" style="max-width: fit-content; margin:auto;">
             </div>
 
         </div>
