@@ -41,11 +41,15 @@ const app = Vue.createApp({
             })
         },
         getById(id){
-            if(id == "") {
-                this.selectedchar = [];
-            } else {
             this.statussuccess = " ";
             this.statuserror = " ";
+            if(id == "") {
+                this.selectedchar = [];
+            } else if(id == "404") {
+                this.statuserror = "har har. very funny"
+            }
+            else {
+
             specurl = baseurl + "/" + id;
             axios.get(specurl)
             .then(response => {
