@@ -46,7 +46,7 @@ const app = Vue.createApp({
             if(id == "") {
                 this.selectedchar = [];
             } else if(id == "404") {
-                this.statuserror = "har har. very funny"
+                this.selectedchar.push({name:"Not",level:404,characterClass:"error",subclass:"internal",campaign:"Revenge of the Server",description:"congratulations, Not has been found. that's what you wanted, right? that's the funny joke you were going for, right? satisfied? ffs"})
             }
             else {
 
@@ -62,7 +62,7 @@ const app = Vue.createApp({
             .catch(error = (ex) => {
                 console.log("Error: " + ex.message);
                 this.statuserror = "couldn't find character. " + ex.message
-
+                this.selectedchar = [];
             }
             )
             }
