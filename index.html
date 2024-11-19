@@ -27,8 +27,8 @@
                 </ul>
                 <p>status: <span class="success">{{statussuccess}}</span><span class="error">{{statuserror}}</span></p>
             <p>Search by ID:</p>
-            <input type="text" class="input" v-model="searchid" style="width:100px; align-self: center;"></input>
-            <input type="button" class="button" value="search" v-on:click="getById(searchid)" style="max-width: fit-content; margin:auto;">
+            <input type="text" class="input" v-model="searchid" v-on:input="getById(searchid)" style="width:100px; align-self: center;"></input>
+<!--             <input type="button" class="button" value="search" v-on:click="getById(searchid)" style="max-width: fit-content; margin:auto;"> -->
             <div class="gridrow">
                 <div v-for="(char, index) in selectedchar" :key="index" class="card">
 
