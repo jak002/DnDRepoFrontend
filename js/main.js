@@ -1,5 +1,5 @@
 /* const baseurl = "http://localhost:5235/api/Character" */
-const baseurl = "http://dndrest.mewnlightro.se/api/Character"
+const baseurl = "https://dndrest.mewnlightro.se/api/Character"
 
 const app = Vue.createApp({
     data() {
